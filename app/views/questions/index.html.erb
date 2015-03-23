@@ -1,31 +1,31 @@
-<h1>Listing questions</h1>
+<h1>Results</h1>
 
-<table>
+<table class="table table-bordered">
   <thead>
     <tr>
-      <th>Question</th>
-      <th>Answer</th>
-      <th>Level</th>
-      <th>Result</th>
-      <th>Stdans</th>
-      <th>User</th>
-      <th colspan="3"></th>
+      <th class="warning">Question</th>
+      <th class="warning">Actual Answer</th>
+      <th class="warning">Student Answer</th>
+      <th class="warning">Level</th>
+      <th class="warning">Result</th>
     </tr>
   </thead>
-
+ 
+ 
   <tbody>
     <% @user = User.find(current_user.id) %>
     <% @questions.where(user_id: @user).each do |question| %>
+      <% if question.result == true %>
+        <% @class = "success" %>
+      <% else %>
+        <% @class = "danger" %>
+      <% end %>
       <tr>
-        <td><%= question.question %></td>
-        <td><%= question.answer %></td>
-        <td><%= question.level %></td>
-        <td><%= question.result %></td>
-        <td><%= question.stdans %></td>
-        <td><%= question.user %></td>
-        <td><%= link_to 'Show', question %></td>
-        <td><%= link_to 'Edit', edit_question_path(question) %></td>
-        <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class=<%= @class %>><%= question.question %></td>
+        <td class=<%= @class %>><%= question.answer %></td>
+        <td class=<%= @class %>><%= question.stdans %></td>
+        <td class=<%= @class %>><%= question.level %></td>
+        <td class=<%= @class %>><%= question.result %></td>
       </tr>
     <% end %>
   </tbody>

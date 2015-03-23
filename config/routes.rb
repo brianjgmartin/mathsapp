@@ -6,10 +6,8 @@ Rails.application.routes.draw do
    devise_for :users
   get 'home/index'
 
-  resources :myscores
-
   get '/check', :controller=>'questions', :action=>'check'
-  post '/validate', :controller=>'questions', :action=>'pal'
+  post '/validate', :controller=>'questions', :action=>'updateScores'
   
   get '/results' => 'questions#index'
 

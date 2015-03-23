@@ -1,2 +1,0 @@
-module MyscoresHelper
-end

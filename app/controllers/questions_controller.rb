@@ -35,7 +35,7 @@ class QuestionsController < ApplicationController
     $input = QuestionGem.questionuestionGenerator(@level, @difficulty)
   end
 
-  def pal
+  def updateScores
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
@@ -55,16 +55,16 @@ class QuestionsController < ApplicationController
       @question.result = false
     end
     @question.save
-    checkscore()
-  end
-
-  def checkscore
-    # @question = Question.last
-    # @result_count = Question.where(user_id: @user,  level: @question.level, result: true).count
-    # @question.level =  ScoreTracker.CheckScore(@result_count, @question.level)
-    @question.save
     redirect_to "/check"
   end
+
+  # def checkscore
+  #   # @question = Question.last
+  #   # @result_count = Question.where(user_id: @user,  level: @question.level, result: true).count
+  #   # @question.level =  ScoreTracker.CheckScore(@result_count, @question.level)
+  #   @question.save
+  #   redirect_to "/check"
+  # end
  
 
   def edit

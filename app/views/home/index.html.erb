@@ -1,0 +1,30 @@
+ 
+<% if !user_signed_in? %>
+ <div class="container">
+    <div class="jumbotron">
+  <h1 class ="bh1">Welcome, To Maths Zone</h1>
+  <p class ="bh1">Test Your ability and track your results</p>
+  <div style="text-align:center;">
+    <a href='/users/sign_up' class='btn btn-lg btn-success' style="margin-right: 10px;">Register</a>
+    <a href="/users/sign_in?colors%5B%5D=%23D4D8D1&amp;colors%5B%5D=%23A8A8A1&amp;colors%5B%5D=%23AA9A66&amp;colors%5B%5D=%23B74934&amp;colors%5B%5D=%23577492&amp;colors%5B%5D=%2367655D&amp;colors%5B%5D=%23332C2F" class="btn btn-lg btn-primary" id="preview-link">Sign In</a>
+  </div>
+</div>
+
+
+<% end %>
+
+<% if user_signed_in? %>
+ <div class="container">
+    <div class="jumbotron">
+  <h1 class ="bh1">Welcome <%= Profile.last.firstname %> </h1>
+ <% @user = User.find(current_user.id) %>
+ <% if Question.where(user_id: @user, result: true).count > 0 %>
+<p class ="bh1">You have completed <%= tag_label(Question.where(user_id: @user, result: true).count * 78.to_f / 100,  :primary) %><%= tag_label('%', :primary) %> </p>
+<% end %>
+  <div style="text-align:center;">
+    <a href='/check' class='btn btn-lg btn-success' style="margin-right: 10px;">Start Quiz</a>
+  </div>
+</div>
+
+
+<% end %>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tproject</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class ="jumbotrons">
+
+<%= nav_bar fixed: :top, brand: "MatZone", responsive: true do %>
+    <%= menu_group do %>
+        <%= menu_item "Home", root_path %>
+    <% end %>
+    <%= menu_group pull: :right do %>
+      <%= menu_item 'Register', new_user_registration_path, :class => 'myli' %>
+      <%= menu_item 'Sign in', new_user_session_path %>
+     
+    <% end %>
+    
+<% end %>
+
+
+<% if user_signed_in? %>
+
+<%= nav_bar fixed: :top, brand: "MatZone", responsive: true do %>
+    <%= menu_group do %>
+        <%= menu_item "Home", root_path %>
+        <%= menu_item "Quiz", check_path %>
+        <%= menu_item "Results", results_path %>
+       
+        
+    <% end %>
+    <%= menu_group pull: :right do %>
+    	<%= menu_item  Profile.last.firstname %> 
+      
+    	<%= menu_item 'Sign Out', destroy_user_session_path, :method => :delete %>
+     
+    <% end %>
+<% end %>
+<% end %>
+
+
+
+
+<%= yield %>
+<% if user_signed_in? %>
+ <div>Signed in as... <%= current_user.email %> (<%= link_to 'Sign out', destroy_user_session_path, :method => :delete
+%>)</div>
+<% else %>
+ <%= link_to 'Register', new_user_registration_path %> or <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
+<!-- <p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p> -->
+
+
+</body>
+</html>

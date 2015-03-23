@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="results">
+            <br />
+            <br />
+            <!-- If User completes a level a message will appear with the users results -->
+            <% if Question.exists? %>
+            <% @levelresult = Question.last.level %>
+            <% if (Question.where(user_id: @user,  level: @levelresult, result: true).count == 6) %>
+                <% @correct = Question.where(user_id: @user,  level: @levelresult, result: true).count  %>
+                <% @wrong = Question.where(user_id: @user,  level: @levelresult, result: false).count  %>
+                <% @firstname = Profile.where(user_id: @user).last.firstname  %>
+                <% @congrats_message, @correct_answer, @wrong_answer = Congratulations.response(@levelresult, @correct , @wrong, @firstname) %>
+                <%= tag_label(@congrats_message, :primary) %> 
+               <br />
+               <br />
+               <%= tag_label(@correct_answer, :success) %>
+               <br />
+               <br />
+               <%= tag_label(@wrong_answer, :danger) %> 
+               <% end %>
+                <% end %>
+        </div>    
+    </div>
+    <!-- Question Field -->
+ 	<div class="col-lg-4"> 
+        <h3  class=" control-label">Question</h3>
+        <h3><strong><%= $input %> = ?</strong> </h3>
+		  <%= form_tag "/validate" do %>
+		      <label  class=" control-label">Answer</label><%= text_field_tag :search_string, nil,  :class => 'form-control' %>
+ 		      <br/>
+ 		     <%= submit_tag "Done", :class => 'btn btn-lg btn-success'%>
+		  <% end %>
+
+	</div>
+    <!-- Supplies a helper to questions -->
+    <div class="col-lg-4">
+        <% if Question.exists?(:user_id => @user,  level: !nil) %>
+        <br />
+        <h4 class="results"><strong>Level <%= @current_level = @level %></strong></h4>
+        <% @last_result = Question.where(:user_id => @user).last.result %>
+       <h3 class="results"><small><%= Hint.getHint($input, @last_result) %></small></h3>
+        <% else %>
+        <br />
+        <h4 class="results"><strong>Level 1</strong></h4>
+        <h3 class="results"><small>Work from left to right</small></h>
+        <% end %>
+      
+
+       
+<!-- <iframe width="300" height="315" src="//www.youtube.com/embed/watch?v=TwEUFTiJX80" frameborder="0" allowfullscreen></iframe> -->
+    
+       
+    </div>
+</div>
+

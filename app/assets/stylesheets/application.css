@@ -1,0 +1,78 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+/*--------------------NavBar-------------------*/
+
+    .navbar-default .navbar-brand {
+float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  /*color: #fff;*/
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  /*padding-top: 9px;*/
+  font-weight: bold;
+    color: #AA9A66; 
+}
+.navbar-default {
+  background-color: #332C2F;
+
+}
+.navbar-default .li{
+	color: red !important;
+}
+
+.top-buffer { 
+	margin-top:80px;
+}
+.navbar-nav>li>a{
+	color: #AA9A66 !important; 
+}
+.navbar-nav>li>a:hover{
+	color: #0C9CF5 !important; 
+}
+
+.myli{
+color: #AA9A66 !important; 
+}
+/*--------------------------Navbar end --------------*/
+
+/*--------------------Home Index------------------*/
+
+.bh1{
+	font-weight:bold;
+	text-align:center;
+	
+}
+.jumbotrons {
+	margin-top: 101px;
+    margin-bottom: 0px;
+    background-image: url(DeathtoStock_Wired7.jpg);
+    background-position: 0% 25%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+
+  .results{
+    text-align: center;
+    width : 70%;
+    margin-left: 50px;
+  }
+
+.span .label  .label-success{
+   
+    width : 70px;
+  }

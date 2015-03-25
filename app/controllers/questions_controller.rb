@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
     else
       @level = 1
     end
-    $input = QuestionGem.questionuestionGenerator(@level, @difficulty, @result_count)
+    $input = QuestionGem.questionGenerator(@level, @difficulty, @result_count)
   end
 
   # Update the user Scores to the sql database

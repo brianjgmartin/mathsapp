@@ -18,30 +18,27 @@ class QuestionsController < ApplicationController
     @question.user_id = @user.id
   end
 
+  # Check that user exists and set level and difficulty 
+  # Ask question appropriate to users level and difficulty
   def check
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
-        @level = ScoreTracker.CheckScore(@result_count, Question.last.level)
+      @level, @difficulty = ScoreTracker.CheckScore(Question.last.level, @result_count)
     else
-        @level = 1
+      @level = 1
     end
-  
-    if (Question.where(user_id: @user,  level: @level, result: true).count <= 3)
-      @difficulty = 1
-    else
-      @difficulty = 2
-    end
-    $input = QuestionGem.questionuestionGenerator(@level, @difficulty)
+    $input = QuestionGem.questionuestionGenerator(@level, @difficulty, @result_count)
   end
 
+  # Update the user Scores to the sql database
   def updateScores
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
       @level1 = ScoreTracker.CheckScore(@result_count, Question.last.level)
     else
-        @level1 = 1 
+      @level1 = 1 
     end
     @question = Question.new
     @question.answer = $ans
@@ -57,15 +54,6 @@ class QuestionsController < ApplicationController
     @question.save
     redirect_to "/check"
   end
-
-  # def checkscore
-  #   # @question = Question.last
-  #   # @result_count = Question.where(user_id: @user,  level: @question.level, result: true).count
-  #   # @question.level =  ScoreTracker.CheckScore(@result_count, @question.level)
-  #   @question.save
-  #   redirect_to "/check"
-  # end
- 
 
   def edit
   end

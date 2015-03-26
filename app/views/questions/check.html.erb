@@ -6,7 +6,7 @@
             <br />
             <% if Question.exists? %>
               <% @levelresult = Question.last.level %>
-                <% if (Question.where(user_id: @user,  level: @levelresult, result: true).count == 6) %>
+                <% if (Question.where(user_id: @user,  level: @levelresult, result: true).count == 8) %>
                   <% @correct = Question.where(user_id: @user,  level: @levelresult, result: true).count  %>
                   <% @wrong = Question.where(user_id: @user,  level: @levelresult, result: false).count  %>
                   <% @firstname = Profile.where(user_id: @user).last.firstname  %>

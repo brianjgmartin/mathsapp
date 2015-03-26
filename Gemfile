@@ -15,13 +15,13 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer',  platforms: :ruby
 
 
-# Install Gems from github
-git 'https://github.com/brianjgmartin/rubyGems.git' do 
+# # Install Gems from github
+# git 'https://github.com/brianjgmartin/rubyGems.git' do 
 	gem 'questionGem'
 	gem 'scoreTracker'
 	gem 'congrats'
 	gem 'Hint'
-end
+# end
 
 # My External Gems
 gem 'devise'

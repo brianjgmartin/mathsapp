@@ -16,12 +16,12 @@ gem 'coffee-rails', '~> 4.0.0'
 
 
 # # Install Gems from github
-# git 'https://github.com/brianjgmartin/rubyGems.git' do 
+git 'https://github.com/brianjgmartin/rubyGems.git' do 
 	gem 'questionGem'
 	gem 'scoreTracker'
 	gem 'congrats'
 	gem 'Hint'
-# end
+end
 
 # My External Gems
 gem 'devise'

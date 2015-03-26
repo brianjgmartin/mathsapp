@@ -19,7 +19,7 @@
   <h1 class ="bh1">Welcome <%= Profile.last.firstname %> </h1>
  <% @user = User.find(current_user.id) %>
  <% if Question.where(user_id: @user, result: true).count > 0 %>
-<p class ="bh1">You have completed <%= tag_label(Question.where(user_id: @user, result: true).count * 78.to_f / 100,  :primary) %><%= tag_label('%', :primary) %> </p>
+<p class ="bh1">You have completed <%= tag_label(Question.where(user_id: @user, result: true).count ,  :primary) %><%= tag_label('Questions', :primary) %> </p>
 <% end %>
   <div style="text-align:center;">
     <a href='/check' class='btn btn-lg btn-success' style="margin-right: 10px;">Start Quiz</a>

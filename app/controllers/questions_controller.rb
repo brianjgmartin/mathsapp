@@ -18,46 +18,69 @@ class QuestionsController < ApplicationController
     @question.user_id = @user.id
   end
 
-  # Check that user exists and set level and difficulty 
-  # Ask question appropriate to users level and difficulty
+  
   def check
+    # Check that user exists and set level and difficulty 
+    # Ask question appropriate to users level and difficulty
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
+      # Query Db for num of questions asked
       @num_questions = Question.where(user_id: @user,  level: Question.last.level).count
+      # Query db for amount of questions answered correctly
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
-  
+      # Get current level, difficulty and min % of questions required to proceed
       @level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
-      @result_count_curr = Question.where(user_id: @user,  level: @level, result: true).count
+      # Query The db for the amount of correct questions answered from the current level
+      @curr_correct_results = Question.where(user_id: @user,  level: @level, result: true).count
+      # Get the last result from the user from db
+      @last_result = Question.where(:user_id => @user).last.result
+      # Query the db for number of questions student got wrong
+      @wrong = Question.where(user_id: @user,  level: Question.last.level, result: false).count
+      # Query the db for students name
+      @firstname = Profile.where(user_id: @user).last.firstname
+    # Set the default values if new user
     else
       @level = 1
       @difficulty = 1
-      @result_count_curr = 0
-    end             
-    $input = QuestionGem.questionGenerator(@level, @difficulty, @result_count_curr)
-    # $input= $min_percent
+      @curr_correct_results = 0
+      @last_result = true
+      @wrong = 0
+      @firstname = ""
+    end
+    # Generate A question Based on level, difficulty and amount of questions answered correctly      
+    $new_question = QuestionGem.questionGenerator(@level, @difficulty, @curr_correct_results)
+
+    # Call the Hint method to help student if required
+    $hint  = Hint.getHint($new_question, @last_result)
+
+    # Positive reinforcement method inform student of results after level completion
+    $congrats_message, $correct_answer, $wrong_answer = Congratulations.response(@level, @result_count , @wrong, @firstname)
   end
 
-  # Update the user Scores to the sql database
-  def updateScores
+  # Get The student results
+  def getResults
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
       @num_questions = Question.where(user_id: @user,  level: Question.last.level).count
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
-      @curr_level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
+    @curr_level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
     else
       @curr_level = 1 
     end
-    @question = Question.new
-    @question.answer = $ans
-    @question.question = $input
-    @question.level = @curr_level
-    @question.stdans = params[:search_string].to_i
-    @question.user_id = @user.id
+    # Check if result is correct
     if $ans == params[:search_string].to_i
-      @question.result = true
+      @result = true
     else 
-      @question.result = false
+      @result = false
     end
+    @student_answer = params[:search_string].to_i
+    update()
+  end
+
+  # Update the reults to db
+  def update
+    @question = Question.new(user_id: @user.id, level: @curr_level, answer: $ans, stdans: @student_answer,
+     result: @result, question: $new_question)
     @question.save
     redirect_to "/check"
   end
@@ -68,11 +91,6 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new
     @question.save
-    respond_with(@question)
-  end
-
-  def update
-    @question.update(question_params)
     respond_with(@question)
   end
 

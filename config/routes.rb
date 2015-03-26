@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'home/index'
 
   get '/check', :controller=>'questions', :action=>'check'
-  post '/validate', :controller=>'questions', :action=>'updateScores'
+  post '/validate', :controller=>'questions', :action=>'getResults'
   
   get '/results' => 'questions#index'
 

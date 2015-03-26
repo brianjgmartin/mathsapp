@@ -23,36 +23,34 @@ class QuestionsController < ApplicationController
   def check
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
+      @num_questions = Question.where(user_id: @user,  level: Question.last.level).count
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
-      @level = ScoreTracker.CheckScore(@result_count, Question.last.level)
+  
+      @level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
       @result_count_curr = Question.where(user_id: @user,  level: @level, result: true).count
-      @corQ = Question.where(user_id: @user,  level: @level, result: true).count 
-      if ((@corQ <=1) or (@corQ >= 4 and @corQ <=5))
-        @difficulty = 1
-      else
-        @difficulty = 2 
-      end
     else
       @level = 1
       @difficulty = 1
       @result_count_curr = 0
     end             
     $input = QuestionGem.questionGenerator(@level, @difficulty, @result_count_curr)
+    # $input= $min_percent
   end
 
   # Update the user Scores to the sql database
   def updateScores
     @user = User.find(current_user.id)
     if Question.exists?(:user_id => @user,  level: !nil)
+      @num_questions = Question.where(user_id: @user,  level: Question.last.level).count
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
-      @curr_level = ScoreTracker.CheckScore(@result_count, Question.last.level)
+      @curr_level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
     else
       @curr_level = 1 
     end
     @question = Question.new
     @question.answer = $ans
     @question.question = $input
-    @question.level = @curr_level 
+    @question.level = @curr_level
     @question.stdans = params[:search_string].to_i
     @question.user_id = @user.id
     if $ans == params[:search_string].to_i

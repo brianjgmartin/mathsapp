@@ -67,13 +67,10 @@ class QuestionsController < ApplicationController
     else
       @curr_level = 1 
     end
-    # Check if result is correct
-    if $ans == params[:search_string].to_i
-      @result = true
-    else 
-      @result = false
-    end
+    # Get the students answer
     @student_answer = params[:search_string].to_i
+    # Check the result 
+    @result = QuestionGem.getResult(@student_answer)
     update()
   end
 

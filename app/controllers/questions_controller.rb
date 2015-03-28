@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
       # Query db for amount of questions answered correctly
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
       # Get current level, difficulty and min % of questions required to proceed
-      @level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
+      @level, @difficulty, $min_percent  = ScoreTracker.CheckLevel(@result_count, Question.last.level, @num_questions)
       # Query The db for the amount of correct questions answered from the current level
       @curr_correct_results = Question.where(user_id: @user,  level: @level, result: true).count
       # Get the last result from the user from db
@@ -48,7 +48,7 @@ class QuestionsController < ApplicationController
       @firstname = ""
     end
     # Generate A question Based on level, difficulty and amount of questions answered correctly      
-    $new_question = QuestionGem.questionGenerator(@level, @difficulty, @curr_correct_results)
+    $new_question ,$ans = QuestionGem.questionGenerator(@level, @difficulty, @curr_correct_results)
 
     # Call the Hint method to help student if required
     $hint  = Hint.getHint($new_question, @last_result)
@@ -63,18 +63,14 @@ class QuestionsController < ApplicationController
     if Question.exists?(:user_id => @user,  level: !nil)
       @num_questions = Question.where(user_id: @user,  level: Question.last.level).count
       @result_count = Question.where(user_id: @user,  level: Question.last.level, result: true).count
-    @curr_level, @difficulty, $min_percent  = ScoreTracker.CheckScore(@result_count, Question.last.level, @num_questions)
+      @curr_level, @difficulty, $min_percent  = ScoreTracker.CheckLevel(@result_count, Question.last.level, @num_questions)
     else
       @curr_level = 1 
     end
     # Get the students answer
     @student_answer = params[:search_string].to_i
-    # Check the result 
-     if $ans == @student_answer
-      @result = true
-    else 
-      @result = false
-    end
+    # Check the result
+    @result = QuestionGem.checkresult(@student_answer, $ans)
     update()
   end
 

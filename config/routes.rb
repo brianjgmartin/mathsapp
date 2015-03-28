@@ -3,10 +3,11 @@ Rails.application.routes.draw do
 
   resources :profiles
 
-   devise_for :users
+  devise_for :users
   get 'home/index'
 
   get '/check', :controller=>'questions', :action=>'check'
+
   post '/validate', :controller=>'questions', :action=>'getResults'
   
   get '/results' => 'questions#index'

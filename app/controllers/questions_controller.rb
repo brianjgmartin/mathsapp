@@ -70,7 +70,11 @@ class QuestionsController < ApplicationController
     # Get the students answer
     @student_answer = params[:search_string].to_i
     # Check the result 
-    @result = QuestionGem.getResult(@student_answer)
+     if $ans == @student_answer
+      @result = true
+    else 
+      @result = false
+    end
     update()
   end
 

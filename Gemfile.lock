@@ -1,11 +1,17 @@
 GIT
   remote: https://github.com/brianjgmartin/rubyGems.git
-  revision: f4ebff556f3f207a0cece511d345c06d59b7389a
+  revision: 6619843529c21ea5a506c837a98a8481d523bb43
   specs:
     Hint (0.0.0)
     congrats (0.0.0)
-    questionGem (0.0.0)
+    questionGem (0.0.1)
     scoreTracker (0.0.0)
+
+GIT
+  remote: https://github.com/ciaranCBbyrne/rubygems.git
+  revision: ed8f5672eacca7d50c19a3b5e63c84400c56969a
+  specs:
+    creditgem (0.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -143,10 +149,11 @@ DEPENDENCIES
   Hint!
   coffee-rails (~> 4.0.0)
   congrats!
+  creditgem!
   devise
   jbuilder (~> 2.0)
   jquery-rails
-  questionGem!
+  questionGem (~> 0.0.1)!
   rails (= 4.1.0)
   sass-rails (~> 4.0.3)
   scoreTracker!

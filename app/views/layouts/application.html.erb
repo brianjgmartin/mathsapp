@@ -30,7 +30,6 @@
     <% end %>
     <%= menu_group pull: :right do %>
     	<%= menu_item  Profile.last.firstname %> 
-      <%= menu_item Credit.setCredit(Question.where(:user_id => current_user).maximum(:level)) %>
       <%= menu_item 'Sign Out', destroy_user_session_path, :method => :delete %>
     <% end %>
 <% end %>

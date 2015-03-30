@@ -38,7 +38,7 @@
     <div class="col-lg-4">
       <% if Question.exists?(:user_id => @user,  level: !nil) %>
         <br />
-        <h4 class="results"><strong>Level <%= @current_level = @level %></strong></h4>
+        <h4 class="results"><strong>Level <%= @current_level = @level %> - <%= @credit %></strong></h4>
         <h3 class="results"><small><%= $hint %></small></h3>
       <% else %>
         <br />

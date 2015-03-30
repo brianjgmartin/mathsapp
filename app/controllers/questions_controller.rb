@@ -52,7 +52,7 @@ class QuestionsController < ApplicationController
 
     # Call the Hint method to help student if required
     $hint  = Hint.getHint($new_question, @last_result)
-
+    @credit = Credit.setCredit(@level)
     # Positive reinforcement method inform student of results after level completion
     $congrats_message, $correct_answer, $wrong_answer = Congratulations.response(@level, @result_count , @wrong, @firstname)
   end

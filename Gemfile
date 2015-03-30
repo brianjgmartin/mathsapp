@@ -23,6 +23,11 @@ git 'https://github.com/brianjgmartin/rubyGems.git' do
 	gem 'Hint'
 end
 
+# Install Ciaran Credit Gem
+git 'https://github.com/ciaranCBbyrne/rubygems.git' do
+	gem 'creditgem'
+end
+
 # My External Gems
 gem 'devise'
 gem 'twitter-bootstrap-rails'

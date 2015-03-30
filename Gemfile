@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # # Install Gems from github
 git 'https://github.com/brianjgmartin/rubyGems.git' do 
-	gem 'questionGem'
+	gem 'questionGem', '~> 0.0.1'
 	gem 'scoreTracker'
 	gem 'congrats'
 	gem 'Hint'
